@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic List Rendering</title>
+</head>
+<body>
+  <div id="root"></div>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+   
+   function Image({src}){
+    return <img src={src} alt="Gallery Image" style={{ width: '100%', height: '100%' }} />;
+   }
+   
+   // Gallery component definition
+
+    function Gallery({ children }) {
+      return (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
+          {children}
+        </div>
+      );
+    }
+
+    // Example usage
+    ReactDOM.createRoot( document.getElementById('root')).render(
+      <Gallery>
+        <Image src="https://cdn.pixabay.com/photo/2022/04/06/23/50/flower-7116555_1280.jpg" />
+        <Image src="https://cdn.pixabay.com/photo/2022/04/06/23/50/flower-7116555_1280.jpg" />
+        <Image src = "https://cdn.pixabay.com/photo/2018/01/28/08/12/nature-3112997_1280.jpg"/>
+        <Image src = "https://cdn.pixabay.com/photo/2022/01/29/09/01/bird-6976834_1280.jpg"/>
+        <Image src = "https://cdn.pixabay.com/photo/2024/04/17/15/06/ai-generated-8702284_1280.jpg"/>
+        {/* Additional images can be included as needed */}
+      </Gallery>,
+     
+    );
+  </script>
+</body>
+</html>
