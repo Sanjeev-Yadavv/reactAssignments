@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    // Your  code will go here
+
+    function  CreateInput(){
+       const [inputData,setInputData] = React.useState([{value:""}])
+       function handleChange(e,i){
+        let arr = [...inputData]
+        arr[i].value = e.target.value;
+
+        setInputData(arr)
+       }
+
+        function AddHobbies(){
+            setInputData([...inputData,{value:""}])
+        }
+
+        function handleRemove(i){
+            let filteredData = inputData.filter((ele,index)=>{
+                return index!=i
+            })
+
+            setInputData(filteredData)
+        }
+
+        return (
+            <div>
+            {
+                inputData.map((el,i)=>{
+                    return(
+                        <div key = {i}>
+                            <input value={el.value} onChange = {(e)=> handleChange(e,i)}/>
+                            <button onClick = {AddHobbies}> Add Hobbies</button>
+                            <button onClick = {()=> handleRemove(i)} disabled = {inputData.length<=1}>Remove Hobbies</button>
+                        </div>
+                    )
+                })
+            }    
+            </div>
+        )
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(
+        < CreateInput/>
+    )
+  </script>
+</html>

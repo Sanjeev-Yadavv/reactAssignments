@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz App</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+
+    function Quiz() {
+      const questions = [
+        {
+          question: "What is the Capital of India ?",
+          options: ["Mumbai", "Kolkata", "Delhi"],
+          correctAnswer: "Delhi"
+        },
+        {
+          question: "What is the currency of Japan ?",
+          options: ["Dollar", "Dinar", "Yen"],
+          correctAnswer: "Yen"
+        },
+
+        {
+          question: "Which city of India is known as the city of dreams ?",
+          options: ["Mumbai", "Kolkata", "Bangluru"],
+          correctAnswer: "Mumbai"
+        }
+      ]
+
+      const [answers, setAnswers] = React.useState(Array(questions.length).fill(null))
+      const [score, setScore] = React.useState(null)
+
+      function handleAnswer(index, answer) {
+        const newAnswers = [...answers];
+        newAnswers[index] = answer;
+        setAnswers(newAnswers)
+      }
+
+      function calculateScore() {
+        let totalScore = 0;
+        answers.forEach((answer, index) => {
+          if (answer === questions[index].correctAnswer) {
+            totalScore++;
+          }
+        })
+        setScore(totalScore)
+      }
+
+      function restartQuiz() {
+        setAnswers(Array(questions.length).fill(null))
+        setScore(null)
+
+
+      }
+
+      return (
+  <div>
+    {score === null ? (
+      <div>
+        {questions.map((q, index) => (
+          <div key={index}>
+            <p>{q.question}</p>
+            <ul>
+              {q.options.map((option, optionIndex) => (
+                <li key={optionIndex}>
+                  <label htmlFor="">
+                    <input
+                      type="radio"
+                      value={option}
+                      checked={answers[index] === option}
+                      onChange={() => handleAnswer(index, option)}
+                    />
+                    {option}
+                  </label>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+        <button onClick={calculateScore}>Submit</button>
+      </div>
+    ) : (
+      <div>
+        <h2>Your Score: {score}/{questions.length}</h2>
+        <button onClick={restartQuiz}>Restart Quiz</button>
+      </div>
+    )}
+  </div>
+);
+    }
+
+
+
+
+    ReactDOM.createRoot(document.getElementById("root")).render(
+      <Quiz />
+    )
+
+
+
+
+
+
+
+
+    // // Define Quiz component
+    // function Quiz() {
+    //   const questions = [
+    //     {
+    //       question: "What is the capital of France?",
+    //       options: ["London", "Paris", "Berlin", "Rome"],
+    //       correctAnswer: "Paris"
+    //     },
+    //     {
+    //       question: "What is 2 + 2?",
+    //       options: ["3", "4", "5", "6"],
+    //       correctAnswer: "4"
+    //     },
+    //     {
+    //       question: "Who wrote 'Romeo and Juliet'?",
+    //       options: ["William Shakespeare", "Jane Austen", "Charles Dickens", "Mark Twain"],
+    //       correctAnswer: "William Shakespeare"
+    //     }
+    //   ];
+
+    //   const [answers, setAnswers] = React.useState(Array(questions.length).fill(null));
+    //   const [score, setScore] = React.useState(null);
+
+    //   function handleAnswer(index, answer) {
+    //     const newAnswers = [...answers];
+    //     newAnswers[index] = answer;
+    //     setAnswers(newAnswers);
+    //   }
+
+    //   function calculateScore() {
+    //     let totalScore = 0;
+    //     answers.forEach((answer, index) => {
+    //       if (answer === questions[index].correctAnswer) {
+    //         totalScore++;
+    //       }
+    //     });
+    //     setScore(totalScore);
+    //   }
+
+    //   function restartQuiz() {
+    //     setAnswers(Array(questions.length).fill(null));
+    //     setScore(null);
+    //   }
+
+    //   return (
+    //     <div>
+    //       {score === null ? (
+    //         <div>
+    //           {questions.map((q, index) => (
+    //             <div key={index}>
+    //               <p>{q.question}</p>
+    //               <ul>
+    //                 {q.options.map((option, optionIndex) => (
+    //                   <li key={optionIndex}>
+    //                     <label>
+    //                       <input
+    //                         type="radio"
+    //                         value={option}
+    //                         checked={answers[index] === option}
+    //                         onChange={() => handleAnswer(index, option)}
+    //                       />
+    //                       {option}
+    //                     </label>
+    //                   </li>
+    //                 ))}
+    //               </ul>
+    //             </div>
+    //           ))}
+    //           <button onClick={calculateScore}>Submit</button>
+    //         </div>
+    //       ) : (
+    //         <div>
+    //           <h2>Your Score: {score}/{questions.length}</h2>
+    //           <button onClick={restartQuiz}>Restart Quiz</button>
+    //         </div>
+    //       )}
+    //     </div>
+    //   );
+    // }
+
+    // // Render Quiz component
+    // ReactDOM.render(<Quiz />, document.getElementById('root'));
+  </script>
+</body>
+
+</html>
