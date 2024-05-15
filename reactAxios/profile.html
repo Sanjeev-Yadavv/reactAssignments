@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profiles</title>
+    <style>
+      /* Add your CSS styles here */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f2f2f2;
+      }
+      .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 0 20px;
+      }
+      .search-input {
+        width: 100%;
+        margin-bottom: 20px;
+        padding: 10px;
+        font-size: 16px;
+      }
+      .user-profile {
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+      // UserProfile component to render individual user profiles
+      function UserProfile({ user }) {
+        return (
+          <div className="user-profile">
+            <h2>{user.name}</h2>
+            <p>Email: {user.email}</p>
+            <p>Phone: {user.phone}</p>
+          </div>
+        );
+      }
+
+      // App component to manage the list of user profiles and search functionality
+      class App extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {
+            searchText: '',
+            users: [
+              { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123-456-7890' },
+              { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '987-654-3210' },
+              // Add more users as needed
+            ],
+          };
+        }
+
+        // Handle changes in the search input
+        handleSearchChange = (event) => {
+          this.setState({ searchText: event.target.value });
+        };
+
+        // Filter users based on search text
+        filterUsers = () => {
+          const { users, searchText } = this.state;
+          return users.filter(user =>
+            user.name.toLowerCase().includes(searchText.toLowerCase())
+          );
+        };
+
+        render() {
+          const { searchText } = this.state;
+          const filteredUsers = this.filterUsers();
+
+          return (
+            <div className="container">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search by name..."
+                value={searchText}
+                onChange={this.handleSearchChange}
+              />
+              {filteredUsers.map(user => (
+                <UserProfile key={user.id} user={user} />
+              ))}
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+  </body>
+</html>
